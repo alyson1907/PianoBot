@@ -1,57 +1,60 @@
 import win32api, win32con
-import win32com.client
 import time
-from pyautogui import *
 import pyautogui as gui
 import keyboard
-import random
-shell = win32com.client.Dispatch("WScript.Shell")
-xPositions = [
-  [415, 's'],
-  [600, 'd'],
-  [790, 'f'],
-  [980, 'space'],
-  [1160, 'j'],
-  [1350, 'k'],
-  [1545, 'l']
-]
-# xPositions = [
-#   415,
-#   600,
-#   790,
-#   980,
-#   1160,
-#   1350,
-#   1545,
-# ]
+
+xPositions = (
+  (415, 's'),
+  (600, 'd'),
+  (790, 'f'),
+  (980, 'space'),
+  (1160, 'j'),
+  (1350, 'k'),
+  (1545, 'l')
+)
+
 y = 933
-gui.PAUSE = 0.007
+gui.PAUSE = 0.007 # Delay between gui commands (e.g keyDown/keyUp, press, ...)
 print('Piano Bot starting...')
 time.sleep(1)
 
+# Can be used to use mouse to press the notes instead of keyboard (slower)
 def clickPos(x, y):
   win32api.SetCursorPos((x, y))
   win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, x, y, 0 , 0)
-  time.sleep(0.05)
+  time.sleep(0.01)
   win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, x, y, 0 , 0)
 
 def pressKey(key):
-  for k in key:
-    gui.keyDown(k)
-  for k in key:
-    gui.keyUp(k)
+    gui.keyDown(key)
+    gui.keyUp(key)
 
 def shouldClickPos(x, y):
-  threshold = 100
+  threshold = 150
   red, green, blue = gui.pixel(x, y)
-  return (red >= threshold and green >= threshold) or (red >= threshold and blue >= threshold) or (green >= threshold and blue >= threshold)
+  return red >= threshold or blue >= threshold or green >= threshold 
 
 while keyboard.is_pressed('x') == False:
-  toPress = []
-  for x, key in xPositions:
-    if shouldClickPos(x, y):
-      toPress.append(key)
-  pressKey(toPress)
+  if shouldClickPos(xPositions[0][0], y):
+    pressKey(xPositions[0][1])
+
+  if shouldClickPos(xPositions[1][0], y):
+    pressKey(xPositions[1][1])
+
+  if shouldClickPos(xPositions[2][0], y):
+    pressKey(xPositions[2][1])
+
+  if shouldClickPos(xPositions[3][0], y):
+    pressKey(xPositions[3][1])
+
+  if shouldClickPos(xPositions[4][0], y):
+    pressKey(xPositions[4][1])
+
+  if shouldClickPos(xPositions[5][0], y):
+    pressKey(xPositions[5][1])
+
+  if shouldClickPos(xPositions[6][0], y):
+    pressKey(xPositions[6][1])
 
 print('Piano Bot terminated.')
 
