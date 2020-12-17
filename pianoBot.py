@@ -13,10 +13,10 @@ xPositions = (
   (1545, 'l')
 )
 
-y = 933
-gui.PAUSE = 0.007 # Delay between gui commands (e.g keyDown/keyUp, press, ...)
+y = 942
+gui.PAUSE = 0.005 # Delay between gui commands (e.g keyDown/keyUp, press, ...)
 print('Piano Bot starting...')
-time.sleep(1)
+time.sleep(3)
 
 # Can be used to use mouse to press the notes instead of keyboard (slower)
 def clickPos(x, y):
